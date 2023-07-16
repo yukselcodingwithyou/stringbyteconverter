@@ -2,16 +2,17 @@ package stringbyteconverter
 
 import "unsafe"
 
-type Converter struct {
+type ToByteConverter interface {
+	Convert(s string) []byte
 }
 
-// New creates new converter
-func New() *Converter {
-	return &Converter{}
+type ToStringConverter interface {
+	Convert(b []byte) *string
 }
 
-// ToBytes converts string to []byte
-func (c *Converter) ToBytes(s string) []byte {
+type toByteConverter struct{}
+
+func (t *toByteConverter) Convert(s string) []byte {
 	return *(*[]byte)(unsafe.Pointer(
 		&struct {
 			string
@@ -20,7 +21,16 @@ func (c *Converter) ToBytes(s string) []byte {
 	))
 }
 
-// ToString converts []byte to string
-func (c *Converter) ToString(b []byte) *string {
+type toStringConverter struct{}
+
+func (t *toStringConverter) Convert(b []byte) *string {
 	return (*string)(unsafe.Pointer(&b))
+}
+
+func NewToByteConverter() ToByteConverter {
+	return &toByteConverter{}
+}
+
+func NewToStringConverter() ToStringConverter {
+	return &toStringConverter{}
 }

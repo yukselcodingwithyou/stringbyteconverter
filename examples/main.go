@@ -6,12 +6,13 @@ import (
 )
 
 func main() {
-	converter := stringbyteconverter.New()
+	toStringConverter := stringbyteconverter.NewToStringConverter()
+	toByteConverter := stringbyteconverter.NewToByteConverter()
 
-	trendyol := converter.ToString([]byte(`trendyol`))
+	trendyol := toStringConverter.Convert([]byte(`yuksel`))
 	fmt.Println(trendyol)
 
-	bytes := converter.ToBytes("trendyol")
+	bytes := toByteConverter.Convert("yuksel")
 	fmt.Println(string(bytes))
 
 }

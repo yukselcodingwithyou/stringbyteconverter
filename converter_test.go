@@ -28,8 +28,8 @@ func TestConverter_ToBytes(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := &Converter{}
-			if got := c.ToBytes(tt.args.s); !reflect.DeepEqual(len(got), tt.want) {
+			c := NewToByteConverter()
+			if got := c.Convert(tt.args.s); !reflect.DeepEqual(len(got), tt.want) {
 				t.Errorf("ToBytes() = %v, want %v", got, tt.want)
 			}
 		})
@@ -59,8 +59,8 @@ func TestConverter_ToString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := &Converter{}
-			if got := c.ToString(tt.args.b); *got != tt.want {
+			c := NewToStringConverter()
+			if got := c.Convert(tt.args.b); *got != tt.want {
 				t.Errorf("ToString() = %v, want %v", got, tt.want)
 			}
 		})
